@@ -49,10 +49,10 @@ app.post("/get_tx_data", async (req, res) => {
   const userAddress = req.body['untrustedData']['address'];
   const amount = 1;
   const nonce = crypto.randomBytes(32);
-  const chainId = req.body['untrustedData']['buttonIndex'] === 1 ? 10 : 42161;
+  const chainId = req.body['untrustedData']['buttonIndex'] === 1 ? 10 : req.body['untrustedData']['buttonIndex'] === 2 ? 42161 : 8453;
   const contractAddress = chainId === 10 
     ? "0x3a30e6487037874ba0d483438b923f65820aeae9" 
-    : "0xf3121fd1ef36c6ebbd5f9d5817817588df2bb3e6";
+    : chainId == 42161 ? "0xf3121fd1ef36c6ebbd5f9d5817817588df2bb3e6" : "0x12aa2d8ebd0b0886aeb89d7b824321f0cbccb160";
 
   const nonceBytes32 = ethers.zeroPadBytes(nonce, 32);
 
@@ -65,7 +65,7 @@ app.post("/get_tx_data", async (req, res) => {
 
   // Construct tx data
   const txData = {
-    chainId: chainId === 10 ? "eip155:10" : "eip155:42161",
+    chainId: `eip155:${chainId}`,
     method: "eth_sendTransaction",
     params: {
       abi: abi,
