@@ -19,8 +19,7 @@ export const initializeSubstreamsListeners = async (dataMapStore, fidMapStore) =
     console.log('started initializing streams')
     for (const listener of listeners.values()) {
         console.log(`before ${listener.network}`)
-        await listener.start(dataStore);
-        console.log(dataMapStore, fidMapStore)
+        await listener.start(dataMapStore, fidMapStore);
         console.log(`after ${listener.network}`)
     }
     console.log('ended initializing streams')
