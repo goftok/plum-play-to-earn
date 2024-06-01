@@ -61,6 +61,17 @@ app.post("/tx_callback", (req, res) => {
   return res.send("OK");
 });
 
+function verify(data) {
+  console.log('Verifying data:', data);
+  return true;
+}
+
+app.post('/verify', (req, res) => {
+  const data = req.body;
+  const result = verify(data);
+  res.json({ verified: result });
+});
+
 app.listen(3001, () => console.log("Server ready on port 3001."));
 
 module.exports = app;
