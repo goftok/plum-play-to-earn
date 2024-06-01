@@ -55,6 +55,8 @@ export class ListenerE {
 
         emitter.on("anyMessage", (message, cursor, clock) => {
             console.error(`GOT ON ${this.network}`)
+            console.log(this.fidMapStore)
+            console.log(this.dataStore)
 
             const address_with_zeroes = message["events"][0]["topics"].slice(-1)[0]
             const address = "0x" + address_with_zeroes.slice(-40)
