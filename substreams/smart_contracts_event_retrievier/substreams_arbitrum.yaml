@@ -1,0 +1,36 @@
+specVersion: v0.1.0
+package:
+  name: "smart_contract_events_retriever_arbitrum"
+  version: v0.1.0
+  doc: |
+    Most part of the code was taken from the original tutorial
+
+imports:
+  ethereum: https://github.com/streamingfast/firehose-ethereum/releases/download/v1.4.8/ethereum-v1.0.0.spkg
+
+network: mainnet # this basically doesn't matter, we will set our rpcs later
+
+protobuf:
+  files:
+    - event.proto
+  importPaths:
+    - ./proto
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ./target/wasm32-unknown-unknown/release/substreams.wasm
+
+modules:
+  - name: map_contract_events
+    kind: map
+    inputs:
+      - params: string
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:eth.event.v1.Events
+    doc: |
+      `map_contract_events` Retrieves the events from a smart contract
+
+params:
+  map_contract_events: "0xf3121fd1ef36c6ebbd5f9d5817817588df2bb3e6"

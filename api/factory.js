@@ -1,6 +1,7 @@
 const { officialSubstreamEndpointsUrls } = require("../services/substreams/config");
+const {ListenerE} = require("../services/substreams/listener");
 
-export const initializeSubstreamsListeners = async () => {
+exports.initializeSubstreamsListeners = async () => {
     const listeners = [];
     Object.entries(officialSubstreamEndpointsUrls).forEach(([network, baseUrl]) => {
         listeners.push(new ListenerE({
