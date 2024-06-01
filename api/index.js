@@ -6,13 +6,9 @@ import { initializeSubstreamsListeners } from './factory.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import {transactionMadeEarlierThanXMinutes} from "./utils.js";
 import { kv } from '@vercel/kv';
 
 const app = express();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 import {sendHtml, transactionMadeEarlierThanXMinutes} from "./utils.js";
 
