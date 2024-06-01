@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {kv} from "@vercel/kv";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,3 +25,19 @@ export const sendHtml = (fileName, res) => {
       res.status(200).send(data);
     });
   };
+
+export const fuidCanClaim = async (req) => {
+    let isVerified = false;
+    const userFid = req.body['untrustedData']['fid']
+
+    console.log(req.body)
+    const ts = await kv.get(userFid);
+    console.log('verify:' + userFid);
+    console.log('verify:' + ts);
+
+    if (ts === null || transactionMadeEarlierThanXMinutes(ts, 1n)) {
+        console.log("VERIFIED")
+        return true
+    }
+    return false
+}

@@ -10,7 +10,7 @@ import { kv } from '@vercel/kv';
 
 const app = express();
 
-import {sendHtml, transactionMadeEarlierThanXMinutes} from "./utils.js";
+import {sendHtml, transactionMadeEarlierThanXMinutes, fuidCanClaim} from "./utils.js";
 
 initializeSubstreamsListeners().then(r => console.log("substreams are ready"))
 
@@ -32,6 +32,10 @@ app.post("/back", (req, res) => {
 });
 
 app.post("/get_tx_data", async (req, res) => {
+  if (!fuidCanClaim(req)) {
+    res.status(200).send({"message": 'Verification failed'});
+    return
+  }
   console.log(req.body)
   const userAddress = req.body['untrustedData']['address'].toLowerCase();
   const userFid = req.body['untrustedData']['fid']
@@ -79,24 +83,10 @@ app.post("/tx_callback", async (req, res) => {
 
 
 app.post('/verify', async (req, res) => {
-
-  let isVerified = false;
-  const userFid = req.body['untrustedData']['fid']
-
-  console.log(req.body)
-  const ts = await kv.get(userFid);
-  console.log('verify:' + userFid);
-  console.log('verify:' + ts);
-
-  if (ts === null || transactionMadeEarlierThanXMinutes(ts, 1n)) {
-    console.log("VERIFIED")
-    isVerified = true
-  }
-
-  if (isVerified) {
+  if (fuidCanClaim(req)) {
     sendHtml('chains.html', res);
     } else {
-    res.status(200).send('Verification failed');
+    res.status(200).send({"message": 'Verification failed'});
   }
 });
 
