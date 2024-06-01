@@ -20,7 +20,32 @@ const methodSignature = "0xacd379cc";
 
 app.use(express.json());
 
-app.get("/", (req, res) => res.send("Working"));
+app.get("/", (req, res) => {
+  res.status(200).send(`
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="icon" type="image/svg+xml" href="/plum.png" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta property="fc:frame" content="vNext" />
+      <meta property="fc:frame:image" content="https://mint.farcaster.xyz/horse.png" />
+    
+      <!-- Verification Button -->
+      <meta property="fc:frame:button:1" content="Verify Address" />
+      <meta property="fc:frame:button:1:action" content="post" />
+      <meta
+        property="fc:frame:button:1:post_url"
+        content="https://hackathon3-seven.vercel.app/verify"
+      />
+      <title>Hackathon3</title>
+    </head>
+    <body>
+      <h1>Welcome to the Hackathon backend!</h1>
+    </body>
+  </html>
+`);
+});
 
 app.post("/get_tx_data", async (req, res) => {
   const userAddress = req.body['untrustedData']['address'];
