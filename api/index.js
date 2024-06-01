@@ -88,7 +88,7 @@ app.post('/verify', async (req, res) => {
   } else {
     const ts = await kv.get(req.body['untrustedData']['fid']);
     function formatTime(ts) {
-      const now = new Date(ts);
+      const now = new Date() - new Date(ts);
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
