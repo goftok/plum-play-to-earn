@@ -98,6 +98,10 @@ app.post('/verify', async (req, res) => {
       console.log(diffMs);
       const diffMs = 60000 - dif;
 
+      if (diffMs < 0) {
+        return "00:00:00"; // Time is up
+      }
+
       const hours = String(Math.floor(diffMs / 3600000)).padStart(2, '0'); // 1 hour = 3600000 ms
       const minutes = String(Math.floor((diffMs % 3600000) / 60000)).padStart(2, '0'); // 1 minute = 60000 ms
       const seconds = String(Math.floor((diffMs % 60000) / 1000)).padStart(2, '0'); // 1 second = 1000 ms
