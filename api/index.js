@@ -88,10 +88,14 @@ app.post('/verify', async (req, res) => {
   } else {
     const ts = await kv.get(req.body['untrustedData']['fid']);
     function formatTime(ts) {
-      const now = new Date() - new Date(ts);
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const now = new Date();
+      const past = new Date(ts);
+      const diffMs = now - past; // Difference in milliseconds
+
+      const hours = String(Math.floor(diffMs / 3600000)).padStart(2, '0'); // 1 hour = 3600000 ms
+      const minutes = String(Math.floor((diffMs % 3600000) / 60000)).padStart(2, '0'); // 1 minute = 60000 ms
+      const seconds = String(Math.floor((diffMs % 60000) / 1000)).padStart(2, '0'); // 1 second = 1000 ms
+
       return `${hours}:${minutes}:${seconds}`;
     }
     res.status(200).send(`<!doctype html>
