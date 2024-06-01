@@ -74,7 +74,7 @@ app.post("/tx_callback", async (req, res) => {
   console.log(req.body);
   const txId = req.body['untrustedData']['transactionId'];
 
-  sendHtml('verify.html', res);
+  sendHtml('back.html', res);
 });
 
 
