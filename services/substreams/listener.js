@@ -64,8 +64,8 @@ export class ListenerE {
             if (error) {
                 console.error(error);
             }
-            console.timeEnd(`close ${this.network}`);
-            console.log('restarting...')
+            console.error(`close ${this.network}`);
+            console.error('restarting...')
 
             setTimeout(() => {
                 emitter.start()
