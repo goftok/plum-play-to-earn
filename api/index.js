@@ -3,6 +3,8 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import crypto from 'crypto';
 import { initializeSubstreamsListeners } from './factory.js';
+import path from 'path';
+import fs from 'fs';
 
 const app = express();
 
@@ -19,30 +21,15 @@ const methodSignature = "0xacd379cc";
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).send(`
-  <!doctype html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <link rel="icon" type="image/svg+xml" href="/plum.png" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="fc:frame" content="vNext" />
-      <meta property="fc:frame:image" content="https://mint.farcaster.xyz/horse.png" />
-    
-      <!-- Verification Button -->
-      <meta property="fc:frame:button:1" content="Verify Address" />
-      <meta property="fc:frame:button:1:action" content="post" />
-      <meta
-        property="fc:frame:button:1:post_url"
-        content="https://hackathon3-seven.vercel.app/verify"
-      />
-      <title>Hackathon3</title>
-    </head>
-    <body>
-      <h1>Welcome to the Hackathon backend!</h1>
-    </body>
-  </html>
-`);
+  const filePath = path.join(__dirname, '../frontend', 'verify.html');
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading HTML file:', err);
+      res.status(500).send('Server error');
+      return;
+    }
+    res.status(200).send(data);
+  });
 });
 
 app.post("/get_tx_data", async (req, res) => {
@@ -87,59 +74,16 @@ app.post('/verify', (req, res) => {
   const isVerified = true;
 
   if (isVerified) {
-    res.status(200).send(`
-      <!doctype html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8" />
-          <link rel="icon" type="image/svg+xml" href="/plum.png" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <meta property="fc:frame" content="vNext" />
-          <meta property="fc:frame:image" content="https://mint.farcaster.xyz/horse.png" />
-        
-          <!-- Optimism Button -->
-          <meta property="fc:frame:button:1" content="Optimism" />
-          <meta property="fc:frame:button:1:action" content="tx" />
-          <meta
-            property="fc:frame:button:1:target"
-            content="https://hackathon3-seven.vercel.app/get_tx_data"
-          />
-          <meta
-            property="fc:frame:button:1:post_url"
-            content="https://hackathon3-seven.vercel.app/tx_callback"
-          />
-
-          <!-- Arbitrum Button -->
-          <meta property="fc:frame:button:2" content="Arbitrum" />
-          <meta property="fc:frame:button:2:action" content="tx" />
-          <meta
-            property="fc:frame:button:2:target"
-            content="https://hackathon3-seven.vercel.app/get_tx_data"
-          />
-          <meta
-            property="fc:frame:button:2:post_url"
-            content="https://hackathon3-seven.vercel.app/tx_callback"
-          />
-
-          <!-- Base Button -->
-          <meta property="fc:frame:button:3" content="Base" />
-          <meta property="fc:frame:button:3:action" content="tx" />
-          <meta
-            property="fc:frame:button:3:target"
-            content="https://hackathon3-seven.vercel.app/get_tx_data"
-          />
-          <meta
-            property="fc:frame:button:3:post_url"
-            content="https://hackathon3-seven.vercel.app/tx_callback"
-          />
-          <title>Hackathon3</title>
-        </head>
-        <body>
-          <h1>Welcome to the Hackathon backend!</h1>
-        </body>
-      </html>
-    `);
-  } else {
+    const filePath = path.join(__dirname, '../frontend', 'chains.html');
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading HTML file:', err);
+        res.status(500).send('Server error');
+        return;
+      }
+      res.status(200).send(data);
+    });
+    } else {
     res.status(400).send('Verification failed');
   }
 });
