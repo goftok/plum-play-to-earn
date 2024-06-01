@@ -86,7 +86,14 @@ app.post('/verify', async (req, res) => {
   if (await fuidCanClaim(req)) {
     sendHtml('chains.html', res);
   } else {
-
+    const ts = await kv.get(req.body['untrustedData']['fid']);
+    function formatTime(ts) {
+      const now = new Date(ts);
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${hours}:${minutes}:${seconds}`;
+    }
     res.status(200).send(`<!doctype html>
     <html lang="en">
       <head>
@@ -96,7 +103,7 @@ app.post('/verify', async (req, res) => {
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="https://hackathon3-seven.vercel.app/plum.gif" />
     
-        <meta property="fc:frame:button:1" content="Back" />
+        <meta property="fc:frame:button:1" content="Back in ${formatTime(ts)}" />
         <!-- Verification Button -->
         <meta property="fc:frame:button:1:action" content="post" />
         <meta
