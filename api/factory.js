@@ -3,7 +3,7 @@ import {ListenerE} from "../services/substreams/listener.js";
 
 
 
-export const initializeSubstreamsListeners = async (dataStore) => {
+export const initializeSubstreamsListeners = async (dataMapStore, fidMapStore) => {
     const listeners = [];
     Object.entries(officialSubstreamEndpointsUrls).forEach(([network, baseUrl]) => {
         listeners.push(new ListenerE({
@@ -20,7 +20,7 @@ export const initializeSubstreamsListeners = async (dataStore) => {
     for (const listener of listeners.values()) {
         console.log(`before ${listener.network}`)
         await listener.start(dataStore);
-        console.log(dataStore)
+        console.log(dataMapStore, fidMapStore)
         console.log(`after ${listener.network}`)
     }
     console.log('ended initializing streams')

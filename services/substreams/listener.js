@@ -41,10 +41,11 @@ export class ListenerE {
         });
     }
 
-    async start(dataStore) {
+    async start(dataMapStore, fidMapStore) {
         await this.init();
 
-        this.dataStore = dataStore;
+        this.dataMapStore = dataMapStore;
+        this.fidMapStore = fidMapStore;
         const emitter = new BlockEmitter(this.transport, this.request, this.registry);
 
         emitter.on("session", (session) => {
@@ -56,7 +57,7 @@ export class ListenerE {
             const address = "0x" + address_with_zeroes.slice(-40)
 
             console.error(`GOT ON ${this.network}`)
-            this.dataStore[address] = clock.timestamp.seconds;
+            this.dataMapStore[address] = clock.timestamp.seconds;
             console.error(this.dataStore);
         });
 
