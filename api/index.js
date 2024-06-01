@@ -95,8 +95,9 @@ app.post('/verify', async (req, res) => {
       const past = new Date(ts * 1000);
       console.log(past);
       const dif = now - past; // Difference in milliseconds
-      console.log(diffMs);
+      console.log(dif);
       const diffMs = 60000 - dif;
+      console.log(diffMs);
 
       if (diffMs < 0) {
         return "00:00:00"; // Time is up
