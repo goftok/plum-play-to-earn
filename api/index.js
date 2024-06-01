@@ -99,8 +99,8 @@ app.post('/verify', (req, res) => {
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="https://mint.farcaster.xyz/horse.png" />
         
-          <!-- Arbitrum Button -->
-          <meta property="fc:frame:button:1" content="Arbitrum" />
+          <!-- Optimism Button -->
+          <meta property="fc:frame:button:1" content="Optimism" />
           <meta property="fc:frame:button:1:action" content="tx" />
           <meta
             property="fc:frame:button:1:target"
@@ -111,8 +111,8 @@ app.post('/verify', (req, res) => {
             content="https://hackathon3-seven.vercel.app/tx_callback"
           />
 
-          <!-- Base Button -->
-          <meta property="fc:frame:button:2" content="Base" />
+          <!-- Arbitrum Button -->
+          <meta property="fc:frame:button:2" content="Arbitrum" />
           <meta property="fc:frame:button:2:action" content="tx" />
           <meta
             property="fc:frame:button:2:target"
@@ -120,6 +120,18 @@ app.post('/verify', (req, res) => {
           />
           <meta
             property="fc:frame:button:2:post_url"
+            content="https://hackathon3-seven.vercel.app/tx_callback"
+          />
+
+          <!-- Base Button -->
+          <meta property="fc:frame:button:3" content="Base" />
+          <meta property="fc:frame:button:3:action" content="tx" />
+          <meta
+            property="fc:frame:button:3:target"
+            content="https://hackathon3-seven.vercel.app/get_tx_data"
+          />
+          <meta
+            property="fc:frame:button:3:post_url"
             content="https://hackathon3-seven.vercel.app/tx_callback"
           />
           <title>Hackathon3</title>
