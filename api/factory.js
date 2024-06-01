@@ -1,7 +1,9 @@
 import {officialSubstreamEndpointsUrls} from "../services/substreams/config.js";
 import {ListenerE} from "../services/substreams/listener.js";
 
-export const initializeSubstreamsListeners = async () => {
+
+
+export const initializeSubstreamsListeners = async (dataStore) => {
     const listeners = [];
     Object.entries(officialSubstreamEndpointsUrls).forEach(([network, baseUrl]) => {
         listeners.push(new ListenerE({
@@ -14,7 +16,6 @@ export const initializeSubstreamsListeners = async () => {
         }));
     });
 
-    const dataStore = {};
     console.log('started initializing streams')
     for (const listener of listeners.values()) {
         console.log(`before ${listener.network}`)
