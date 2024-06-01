@@ -33,7 +33,7 @@ app.post("/back", (req, res) => {
 
 app.post("/get_tx_data", async (req, res) => {
   console.log(req.body)
-  const userAddress = req.body['untrustedData']['address'];
+  const userAddress = req.body['untrustedData']['address'].toLowerCase();
   const userFid = req.body['untrustedData']['fid']
 
   await kv.set(userAddress, userFid);

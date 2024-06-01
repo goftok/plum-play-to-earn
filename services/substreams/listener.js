@@ -55,7 +55,7 @@ export class ListenerE {
             console.error(`GOT ON ${this.network}`)
 
             const address_with_zeroes = message["events"][0]["topics"].slice(-1)[0]
-            const address = "0x" + address_with_zeroes.slice(-40)
+            const address = ("0x" + address_with_zeroes.slice(-40)).toLowerCase()
 
             console.log(address);
             const userFid = await kv.get(address);
