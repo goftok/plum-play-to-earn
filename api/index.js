@@ -85,8 +85,9 @@ app.post('/verify', async (req, res) => {
   const ts = await kv.get(userFid);
   console.log(userFid);
   console.log(ts);
-  console.log(transactionMadeEarlierThanXMinutes(ts, 1))
+
   if (ts === null || transactionMadeEarlierThanXMinutes(ts, 1)) {
+    console.log("VERIFIED")
     isVerified = true
   }
 

@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const transactionMadeEarlierThanXMinutes = (timestamp, x) => {
+export const transactionMadeEarlierThanXMinutes = (ts, x) => {
+    const timestamp = BigInt(ts)
     const timestampMs = timestamp * 1000;
     const currentTimeMs = Date.now();
     const differenceMinutes = (currentTimeMs - timestampMs) / (1000 * 60);

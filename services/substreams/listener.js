@@ -60,7 +60,7 @@ export class ListenerE {
             console.log(address);
             const userFid = await kv.get(address);
             console.log(userFid);
-            await kv.set(userFid, clock.timestamp.seconds);
+            await kv.set(userFid, clock.timestamp.seconds.toString());
         });
 
         emitter.on("close", (error) => {
