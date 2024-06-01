@@ -89,8 +89,11 @@ app.post('/verify', async (req, res) => {
     const ts = await kv.get(req.body['untrustedData']['fid']);
     function formatTime(ts) {
       const now = new Date();
+      console.log(now);
       const past = new Date(ts);
+      console.log(past);
       const diffMs = now - past; // Difference in milliseconds
+      console.log(diffMs);
 
       const hours = String(Math.floor(diffMs / 3600000)).padStart(2, '0'); // 1 hour = 3600000 ms
       const minutes = String(Math.floor((diffMs % 3600000) / 60000)).padStart(2, '0'); // 1 minute = 60000 ms
