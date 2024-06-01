@@ -3,6 +3,9 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import crypto from 'crypto';
 import { initializeSubstreamsListeners } from './factory.js';
+//  import body-parser 
+
+import bodyParser from 'body-parser';
 
 
 const app = express();
@@ -20,6 +23,7 @@ const privateKey = process.env.PRIVATE_KEY;
 const methodSignature = "0xacd379cc";
 
 app.use(express.json());
+app.use(bodyParser.json());
 
 app.post("/get_tx_data", (req, res) => {
   const userAddress = req.body['address'];
@@ -68,16 +72,55 @@ app.post("/tx_callback", (req, res) => {
   return res.send("OK");
 });
 
-function verify(data) {
-  console.log('Verifying data:', data);
-  return true;
-}
-
 app.post('/verify', (req, res) => {
-  const data = req.body;
-  const result = verify(data);
-  res.json({ verified: result });
+  const isVerified = true;
+
+  if (isVerified) {
+    res.status(200).send(`
+      <!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <link rel="icon" type="image/svg+xml" href="/plum.png" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta property="fc:frame" content="vNext" />
+          <meta property="fc:frame:image" content="https://mint.farcaster.xyz/horse.png" />
+        
+          <!-- Arbitrum Button -->
+          <meta property="fc:frame:button:1" content="Arbitrum" />
+          <meta property="fc:frame:button:1:action" content="tx" />
+          <meta
+            property="fc:frame:button:1:target"
+            content="https://hackathon3-seven.vercel.app/get_tx_data"
+          />
+          <meta
+            property="fc:frame:button:1:post_url"
+            content="https://hackathon3-seven.vercel.app/tx_callback"
+          />
+
+          <!-- Base Button -->
+          <meta property="fc:frame:button:2" content="Base" />
+          <meta property="fc:frame:button:2:action" content="tx" />
+          <meta
+            property="fc:frame:button:2:target"
+            content="https://hackathon3-seven.vercel.app/get_tx_data"
+          />
+          <meta
+            property="fc:frame:button:2:post_url"
+            content="https://hackathon3-seven.vercel.app/tx_callback"
+          />
+          <title>Hackathon3</title>
+        </head>
+        <body>
+          <h1>Welcome to the Hackathon backend!</h1>
+        </body>
+      </html>
+    `);
+  } else {
+    res.status(400).send('Verification failed');
+  }
 });
+
 
 app.listen(3001, () => console.log("Server ready on port 3001."));
 
