@@ -123,10 +123,12 @@ app.post('/verify', (req, res) => {
   const isVerified = false;
   console.log(req.body)
 
+
+
   if (isVerified) {
     sendHtml('chains.html', res);
     } else {
-    res.status(400).send('Verification failed');
+    res.status(200).send('Verification failed');
   }
 });
 
