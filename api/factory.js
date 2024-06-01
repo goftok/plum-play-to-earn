@@ -20,6 +20,7 @@ export const initializeSubstreamsListeners = async () => {
         console.log(`before ${listener.network}`)
         await listener.start(dataStore);
         console.log(dataStore)
+        console.log(`after ${listener.network}`)
     }
     console.log('ended initializing streams')
 }
