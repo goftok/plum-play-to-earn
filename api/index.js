@@ -3,10 +3,6 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import crypto from 'crypto';
 import { initializeSubstreamsListeners } from './factory.js';
-//  import body-parser 
-
-import bodyParser from 'body-parser';
-
 
 const app = express();
 
@@ -23,7 +19,6 @@ const privateKey = process.env.PRIVATE_KEY;
 const methodSignature = "0xacd379cc";
 
 app.use(express.json());
-app.use(bodyParser.json());
 
 app.post("/get_tx_data", (req, res) => {
   const userAddress = req.body['address'];
