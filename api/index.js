@@ -14,7 +14,6 @@ const methodSignature = "0xacd379cc";
 app.use(express.json());
 
 app.post("/get_tx_data", (req, res) => {
-  console.log(privateKey);
   const userAddress = req.body['address'];
   const amount = 1;
   const nonce = crypto.randomBytes(32).toString('hex');
