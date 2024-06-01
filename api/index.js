@@ -1,5 +1,5 @@
 const express = require("express");
-const Web3 = require("web3");
+const { Web3 } = require("web3");
 const { ethers } = require("ethers");
 const app = express();
 
