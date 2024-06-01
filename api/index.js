@@ -4,10 +4,13 @@ import { ethers } from 'ethers';
 import crypto from 'crypto';
 import { initializeSubstreamsListeners } from './factory.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 initializeSubstreamsListeners().then(r => console.log("substreams are ready"))
 
