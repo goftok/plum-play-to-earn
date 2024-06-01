@@ -57,14 +57,14 @@ export class ListenerE {
 
             console.log(`GOT ON ${this.network}`)
             this.dataStore[address] = clock.timestamp.seconds;
-            console.dir(this.dataStore);
+            console.error(this.dataStore);
         });
 
         emitter.on("close", (error) => {
             if (error) {
                 console.error(error);
             }
-            console.timeEnd(`🆗 close ${this.network}`);
+            console.timeEnd(`close ${this.network}`);
             console.log('restarting...')
 
             setTimeout(() => {
