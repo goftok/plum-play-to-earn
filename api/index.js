@@ -3,15 +3,9 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import crypto from 'crypto';
 import { initializeSubstreamsListeners } from './factory.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
-import {transactionMadeEarlierThanXMinutes} from "./utils.js";
+import {sendHtml, transactionMadeEarlierThanXMinutes} from "./utils.js";
 
 const app = express();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const dataMapStore = {}
 const fidMapStore = {}
@@ -26,18 +20,6 @@ const privateKey = process.env.PRIVATE_KEY;
 const methodSignature = "0xacd379cc";
 
 app.use(express.json());
-
-const sendHtml = (fileName, res) => {
-  const filePath = path.join(__dirname, '../frontend', fileName);
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading HTML file:', err);
-      res.status(500).send('Server error');
-      return;
-    }
-    res.status(200).send(data);
-  });
-};
 
 app.get("/", (req, res) => {
   sendHtml('verify.html', res);
