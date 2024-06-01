@@ -9,8 +9,6 @@ const app = express();
 
 initializeSubstreamsListeners().then(r => console.log("substreams are ready"))
 
-initializeSubstreamsListeners().then(r => console.log("substreams are ready"))
-
 const abi = [{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"uint256","name":"chainId","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"ECDSAInvalidSignature","type":"error"},{"inputs":[{"internalType":"uint256","name":"length","type":"uint256"}],"name":"ECDSAInvalidSignatureLength","type":"error"},{"inputs":[{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"ECDSAInvalidSignatureS","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},{"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},{"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},{"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"OwnableInvalidOwner","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"OwnableUnauthorizedAccount","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"nonce","type":"bytes32"},{"internalType":"bytes","name":"signature","type":"bytes"}],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"serverAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"chainId","type":"uint256"}],"name":"setChainId","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_serverAddress","type":"address"}],"name":"setServerAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"name":"usedNonces","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]
 
 const web3 = new Web3();
@@ -20,7 +18,32 @@ const methodSignature = "0xacd379cc";
 
 app.use(express.json());
 
-app.get("/", (req, res) => res.send("Working"));
+app.get("/", (req, res) => {
+  res.status(200).send(`
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="icon" type="image/svg+xml" href="/plum.png" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta property="fc:frame" content="vNext" />
+      <meta property="fc:frame:image" content="https://mint.farcaster.xyz/horse.png" />
+    
+      <!-- Verification Button -->
+      <meta property="fc:frame:button:1" content="Verify Address" />
+      <meta property="fc:frame:button:1:action" content="post" />
+      <meta
+        property="fc:frame:button:1:post_url"
+        content="https://hackathon3-seven.vercel.app/verify"
+      />
+      <title>Hackathon3</title>
+    </head>
+    <body>
+      <h1>Welcome to the Hackathon backend!</h1>
+    </body>
+  </html>
+`);
+});
 
 app.post("/get_tx_data", async (req, res) => {
   const userAddress = req.body['untrustedData']['address'];
@@ -74,8 +97,8 @@ app.post('/verify', (req, res) => {
           <meta property="fc:frame" content="vNext" />
           <meta property="fc:frame:image" content="https://mint.farcaster.xyz/horse.png" />
         
-          <!-- Arbitrum Button -->
-          <meta property="fc:frame:button:1" content="Arbitrum" />
+          <!-- Optimism Button -->
+          <meta property="fc:frame:button:1" content="Optimism" />
           <meta property="fc:frame:button:1:action" content="tx" />
           <meta
             property="fc:frame:button:1:target"
@@ -86,8 +109,8 @@ app.post('/verify', (req, res) => {
             content="https://hackathon3-seven.vercel.app/tx_callback"
           />
 
-          <!-- Base Button -->
-          <meta property="fc:frame:button:2" content="Base" />
+          <!-- Arbitrum Button -->
+          <meta property="fc:frame:button:2" content="Arbitrum" />
           <meta property="fc:frame:button:2:action" content="tx" />
           <meta
             property="fc:frame:button:2:target"
@@ -95,6 +118,18 @@ app.post('/verify', (req, res) => {
           />
           <meta
             property="fc:frame:button:2:post_url"
+            content="https://hackathon3-seven.vercel.app/tx_callback"
+          />
+
+          <!-- Base Button -->
+          <meta property="fc:frame:button:3" content="Base" />
+          <meta property="fc:frame:button:3:action" content="tx" />
+          <meta
+            property="fc:frame:button:3:target"
+            content="https://hackathon3-seven.vercel.app/get_tx_data"
+          />
+          <meta
+            property="fc:frame:button:3:post_url"
             content="https://hackathon3-seven.vercel.app/tx_callback"
           />
           <title>Hackathon3</title>
