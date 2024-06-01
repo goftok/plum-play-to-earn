@@ -7,9 +7,9 @@ const __dirname = path.dirname(__filename);
 
 export const transactionMadeEarlierThanXMinutes = (ts, x) => {
     const timestamp = BigInt(ts)
-    const timestampMs = timestamp * 1000;
+    const timestampMs = timestamp * 1000n;
     const currentTimeMs = Date.now();
-    const differenceMinutes = (currentTimeMs - timestampMs) / (1000 * 60);
+    const differenceMinutes = (currentTimeMs - timestampMs) / (1000n * 60n);
     return differenceMinutes <= x;
 }
 
