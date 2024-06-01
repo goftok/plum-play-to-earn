@@ -57,9 +57,9 @@ export class ListenerE {
             const address_with_zeroes = message["events"][0]["topics"].slice(-1)[0]
             const address = ("0x" + address_with_zeroes.slice(-40)).toLowerCase()
 
-            console.log(address);
+            console.log('listener:' + address);
             const userFid = await kv.get(address);
-            console.log(userFid);
+            console.log('listener:' + userFid);
             await kv.set(userFid, clock.timestamp.seconds.toString());
         });
 
