@@ -87,10 +87,12 @@ app.post('/verify', async (req, res) => {
     sendHtml('chains.html', res);
   } else {
     const ts = await kv.get(req.body['untrustedData']['fid']);
+    console.log(ts);
+
     function formatTime(ts) {
       const now = new Date();
       console.log(now);
-      const past = new Date(ts);
+      const past = new Date(ts * 1000);
       console.log(past);
       const diffMs = now - past; // Difference in milliseconds
       console.log(diffMs);
