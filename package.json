@@ -10,14 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "crypto": "^1.0.1",
-    "ethers": "^6.12.1",
-    "express": "^4.19.2",
-    "web3": "^4.9.0",
     "@substreams/core": "latest",
     "@substreams/manifest": "latest",
     "@substreams/node": "latest",
-    "@wharfkit/antelope": "latest"
+    "@vercel/kv": "^2.0.0",
+    "@wharfkit/antelope": "latest",
+    "crypto": "^1.0.1",
+    "ethers": "^6.12.1",
+    "express": "^4.19.2",
+    "web3": "^4.9.0"
   },
   "type": "module",
   "devDependencies": {
