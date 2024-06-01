@@ -13,8 +13,13 @@
     "crypto": "^1.0.1",
     "ethers": "^6.12.1",
     "express": "^4.19.2",
-    "web3": "^4.9.0"
+    "web3": "^4.9.0",
+    "@substreams/core": "latest",
+    "@substreams/manifest": "latest",
+    "@substreams/node": "latest",
+    "@wharfkit/antelope": "latest"
   },
+  "type": "module",
   "devDependencies": {
     "@types/node": "^20.13.0"
   }

@@ -1,11 +1,12 @@
-const { createRegistry, createRequest } = require("@substreams/core");
-const { readPackage } = require("@substreams/manifest");
-const { BlockEmitter } = require("@substreams/node");
-const { createNodeTransport } = require("@substreams/node/createNodeTransport");
-const path = require("path");
-const { NetworkParams } = require("@substreams/core/proto");
+import { createRegistry, createRequest } from "@substreams/core";
+import { readPackage } from "@substreams/manifest";
+import { BlockEmitter } from "@substreams/node";
+import createNodeTransport from "@substreams/node/createNodeTransport";
+import path from "path";
+import { NetworkParams } from "@substreams/core/proto";
 
-class ListenerE {
+
+export class ListenerE {
     constructor({network, apiKey, baseUrl, manifestPath, outputModule, startBlockNum}) {
         if (!apiKey) {
             throw new Error("SUBSTREAMS_API_KEY is required");
@@ -78,5 +79,3 @@ class ListenerE {
         emitter.start();
     }
 }
-
-exports.ListenerE = ListenerE

@@ -1,8 +1,10 @@
-const express = require("express");
-const { Web3 } = require("web3");
-const { ethers } = require("ethers");
-const crypto = require("crypto");
-const {initializeSubstreamsListeners} = require("./factory");
+import express from 'express';
+import Web3 from 'web3';
+import { ethers } from 'ethers';
+import crypto from 'crypto';
+import { initializeSubstreamsListeners } from './factory.js';
+
+
 const app = express();
 
 
@@ -79,4 +81,4 @@ app.post('/verify', (req, res) => {
 
 app.listen(3001, () => console.log("Server ready on port 3001."));
 
-module.exports = app;
+export default app
