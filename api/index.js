@@ -13,9 +13,9 @@ const txData = {
   },
 };
 
-app.post("/get_tx_data", (req, res) => {console.log(req); return res.json(txData); });
+app.post("/get_tx_data", (req, res) => {console.log(req.body); return res.json(txData); });
 
-app.post("/tx_callback", (req, res) => {console.log(req); return res.send("OK"); });
+app.post("/tx_callback", (req, res) => {console.log(req.body); return res.send("OK"); });
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
 
