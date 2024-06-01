@@ -85,8 +85,30 @@ app.post("/tx_callback", async (req, res) => {
 app.post('/verify', async (req, res) => {
   if (await fuidCanClaim(req)) {
     sendHtml('chains.html', res);
-    } else {
-    res.status(200).send({"message": 'Verification failed'});
+  } else {
+
+    res.status(200).send(`<!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/plum.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="fc:frame" content="vNext" />
+        <meta property="fc:frame:image" content="https://hackathon3-seven.vercel.app/plum.gif" />
+    
+        <meta property="fc:frame:button:1" content="Back" />
+        <!-- Verification Button -->
+        <meta property="fc:frame:button:1:action" content="post" />
+        <meta
+          property="fc:frame:button:1:post_url"
+          content="https://hackathon3-seven.vercel.app/back"
+        />
+        <title>Hackathon3</title>
+      </head>
+      <body>
+        <h1>Welcome to the Hackathon backend!</h1>
+      </body>
+    </html>`);
   }
 });
 
