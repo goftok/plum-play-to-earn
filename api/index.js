@@ -118,7 +118,17 @@ app.post('/verify', async (req, res) => {
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="https://hackathon3-seven.vercel.app/plum.gif" />
     
-        <meta property="fc:frame:button:1" content="Back in ${formatTime(ts)}" />
+        <meta property="fc:frame:button:1" content="Back in ${formatTime(ts)}" id="timeMeta"/>
+        <script>
+          function updateMetaTag() {
+            const timeMetaTag = document.getElementById('timeMeta');
+            const formattedTime = formatTime();
+            timeMetaTag.setAttribute('content', \`Back in \${formattedTime}\`);
+          }
+      
+          document.addEventListener('DOMContentLoaded', updateMetaTag);
+          setInterval(updateMetaTag, 1000);  // Update every second
+        </script>
         <!-- Verification Button -->
         <meta property="fc:frame:button:1:action" content="post" />
         <meta
