@@ -32,7 +32,7 @@ app.post("/back", (req, res) => {
 });
 
 app.post("/get_tx_data", async (req, res) => {
-  if (!fuidCanClaim(req)) {
+  if (!(await fuidCanClaim(req))) {
     res.status(200).send({"message": 'Verification failed'});
     return
   }
@@ -83,7 +83,7 @@ app.post("/tx_callback", async (req, res) => {
 
 
 app.post('/verify', async (req, res) => {
-  if (fuidCanClaim(req)) {
+  if (await fuidCanClaim(req)) {
     sendHtml('chains.html', res);
     } else {
     res.status(200).send({"message": 'Verification failed'});
