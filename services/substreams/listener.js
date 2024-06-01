@@ -5,7 +5,7 @@ import createNodeTransport from "@substreams/node/createNodeTransport";
 import path from "path";
 import { NetworkParams } from "@substreams/core/proto";
 import {findSourceMap} from "node:module";
-
+import { kv } from '@vercel/kv';
 
 export class ListenerE {
     constructor({network, apiKey, baseUrl, manifestPath, outputModule, startBlockNum}) {
@@ -42,28 +42,25 @@ export class ListenerE {
         });
     }
 
-    async start(dataMapStore, fidMapStore) {
+    async start() {
         await this.init();
 
-        this.dataMapStore = dataMapStore;
-        this.fidMapStore = fidMapStore;
         const emitter = new BlockEmitter(this.transport, this.request, this.registry);
 
         emitter.on("session", (session) => {
             console.dir(session);
         });
 
-        emitter.on("anyMessage", (message, cursor, clock) => {
+        emitter.on("anyMessage", async (message, cursor, clock) => {
             console.error(`GOT ON ${this.network}`)
-            console.log(this.fidMapStore)
-            console.log(this.dataStore)
 
             const address_with_zeroes = message["events"][0]["topics"].slice(-1)[0]
             const address = "0x" + address_with_zeroes.slice(-40)
 
-            const userFid = this.fidMapStore[address]
-            this.dataMapStore[userFid] = clock.timestamp.seconds
-            console.error(this.dataStore);
+            console.log(address);
+            const userFid = await kv.set(address);
+            console.log(userFid);
+            await kv.set(userFid, clock.timestamp.seconds);
         });
 
         emitter.on("close", (error) => {
