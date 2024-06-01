@@ -4,6 +4,7 @@ import { BlockEmitter } from "@substreams/node";
 import createNodeTransport from "@substreams/node/createNodeTransport";
 import path from "path";
 import { NetworkParams } from "@substreams/core/proto";
+import {findSourceMap} from "node:module";
 
 
 export class ListenerE {
@@ -53,11 +54,13 @@ export class ListenerE {
         });
 
         emitter.on("anyMessage", (message, cursor, clock) => {
+            console.error(`GOT ON ${this.network}`)
+
             const address_with_zeroes = message["events"][0]["topics"].slice(-1)[0]
             const address = "0x" + address_with_zeroes.slice(-40)
 
-            console.error(`GOT ON ${this.network}`)
-            this.dataMapStore[address] = clock.timestamp.seconds;
+            const userFid = this.fidMapStore[address]
+            this.dataMapStore[userFid] = clock.timestamp.seconds
             console.error(this.dataStore);
         });
 
