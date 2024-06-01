@@ -94,8 +94,9 @@ app.post('/verify', async (req, res) => {
       console.log(now);
       const past = new Date(ts * 1000);
       console.log(past);
-      const diffMs = now - past; // Difference in milliseconds
+      const dif = now - past; // Difference in milliseconds
       console.log(diffMs);
+      const diffMs = 60000 - dif;
 
       const hours = String(Math.floor(diffMs / 3600000)).padStart(2, '0'); // 1 hour = 3600000 ms
       const minutes = String(Math.floor((diffMs % 3600000) / 60000)).padStart(2, '0'); // 1 minute = 60000 ms
