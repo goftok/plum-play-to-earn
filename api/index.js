@@ -120,15 +120,37 @@ app.post('/verify', async (req, res) => {
     
         <meta property="fc:frame:button:1" content="Back in ${formatTime(ts)}" id="timeMeta"/>
         <script>
-          function updateMetaTag() {
-            const timeMetaTag = document.getElementById('timeMeta');
-            const formattedTime = formatTime();
-            timeMetaTag.setAttribute('content', \`Back in \${formattedTime}\`);
+        function formatTime(ts) {
+          const now = new Date();
+          const past = new Date(ts * 1000); // Assuming ts is in seconds
+          const dif = now - past; // Difference in milliseconds
+          const diffMs = 60000 - dif;
+
+          if (diffMs < 0) {
+            return "00:00:00"; // Time is up
           }
-      
-          document.addEventListener('DOMContentLoaded', updateMetaTag);
-          setInterval(updateMetaTag, 1000);  // Update every second
-        </script>
+
+          const hours = String(Math.floor(diffMs / 3600000)).padStart(2, '0'); // 1 hour = 3600000 ms
+          const minutes = String(Math.floor((diffMs % 3600000) / 60000)).padStart(2, '0'); // 1 minute = 60000 ms
+          const seconds = String(Math.floor((diffMs % 60000) / 1000)).padStart(2, '0'); // 1 second = 1000 ms
+
+          return \`\${hours}:\${minutes}:\${seconds}\`;
+        }
+
+        function updateMetaTag(ts) {
+          const timeMetaTag = document.getElementById('timeMeta');
+          const formattedTime = formatTime(ts);
+          timeMetaTag.setAttribute('content', \`Back in \${formattedTime}\`);
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+          const ts = ${ts}; // Pass the initial timestamp to the client-side script
+          updateMetaTag(ts);
+          setInterval(function() {
+            updateMetaTag(ts);
+          }, 1000);
+        });
+      </script>
         <!-- Verification Button -->
         <meta property="fc:frame:button:1:action" content="post" />
         <meta
