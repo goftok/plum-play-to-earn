@@ -27,11 +27,12 @@ export const sendHtml = (fileName, res) => {
   };
 
 export const fuidCanClaim = async (req) => {
-    let isVerified = false;
     const userFid = req.body['untrustedData']['fid']
 
     console.log(req.body)
+    await kv.get(userFid);
     const ts = await kv.get(userFid);
+
     console.log('verify:' + userFid);
     console.log('verify:' + ts);
 
