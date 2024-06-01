@@ -59,6 +59,6 @@ app.post("/tx_callback", (req, res) => {
   return res.send("OK");
 });
 
-app.listen(3000, () => console.log("Server ready on port 3000."));
+app.listen(3001, () => console.log("Server ready on port 3001."));
 
 module.exports = app;
