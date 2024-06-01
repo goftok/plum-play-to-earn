@@ -78,16 +78,16 @@ app.post("/tx_callback", async (req, res) => {
 
 app.post('/verify', async (req, res) => {
 
-  let isVerified = true;
-  // const userFid = req.body['untrustedData']['fid']
+  let isVerified = false;
+  const userFid = req.body['untrustedData']['fid']
 
-  // console.log(req.body)
-  // const ts = await kv.get(userFid);
-  // console.log(userFid);
-  // console.log(ts);
-  // if (ts === undefined || transactionMadeEarlierThanXMinutes(ts, 1)) {
-  //   isVerified = true
-  // }
+  console.log(req.body)
+  const ts = await kv.get(userFid);
+  console.log(userFid);
+  console.log(ts);
+  if (ts === null || transactionMadeEarlierThanXMinutes(ts, 1)) {
+    isVerified = true
+  }
 
   if (isVerified) {
     sendHtml('chains.html', res);
