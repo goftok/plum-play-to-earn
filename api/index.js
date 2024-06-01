@@ -13,7 +13,7 @@ const txData = {
   },
 };
 
-app.get("/get_tx_data", (req, res) => res.json(txData));
+app.post("/get_tx_data", (req, res) => res.json(txData));
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
 
