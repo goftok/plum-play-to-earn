@@ -24,8 +24,8 @@ const methodSignature = "0xacd379cc";
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  const filePath = path.join(__dirname, '../frontend', 'verify.html');
+const sendHtml = (fileName, res) => {
+  const filePath = path.join(__dirname, '../frontend', fileName);
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       console.error('Error reading HTML file:', err);
@@ -34,9 +34,17 @@ app.get("/", (req, res) => {
     }
     res.status(200).send(data);
   });
+};
+
+app.get("/", (req, res) => {
+  sendHtml('verify.html', res);
 });
 
-app.post("/get_tx_data", async (req, res) => {
+app.post("/back", (req, res) => {
+  sendHtml('verify.html', res);
+});
+
+  app.post("/get_tx_data", async (req, res) => {
   const userAddress = req.body['untrustedData']['address'];
   const amount = 1;
   const nonce = crypto.randomBytes(32);
@@ -79,6 +87,7 @@ app.post("/tx_callback", async (req, res) => {
       try {
         const receipt = await web3.eth.getTransactionReceipt(txId);
         if (receipt) {
+          sendHtml('back.html', res);
           return receipt;
         }
       } catch (error) {
@@ -115,15 +124,7 @@ app.post('/verify', (req, res) => {
   console.log(req.body)
 
   if (isVerified) {
-    const filePath = path.join(__dirname, '../frontend', 'chains.html');
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        console.error('Error reading HTML file:', err);
-        res.status(500).send('Server error');
-        return;
-      }
-      res.status(200).send(data);
-    });
+    sendHtml('chains.html', res);
     } else {
     res.status(400).send('Verification failed');
   }
