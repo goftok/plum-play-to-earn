@@ -58,7 +58,7 @@ export class ListenerE {
             const address = "0x" + address_with_zeroes.slice(-40)
 
             console.log(address);
-            const userFid = await kv.set(address);
+            const userFid = await kv.get(address);
             console.log(userFid);
             await kv.set(userFid, clock.timestamp.seconds);
         });
