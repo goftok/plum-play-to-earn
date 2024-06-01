@@ -88,41 +88,7 @@ app.post("/tx_callback", async (req, res) => {
   console.log(req.body);
   const txId = req.body['untrustedData']['transactionId'];
 
-  const getTransactionReceipt = async (txId, timeout = 3000) => {
-    const start = Date.now();
-    while (Date.now() - start < timeout) {
-      try {
-        const receipt = await web3.eth.getTransactionReceipt(txId);
-        if (receipt) {
-          sendHtml('back.html', res);
-          return receipt;
-        }
-      } catch (error) {
-        console.error("Error fetching transaction receipt: ", error);
-      }
-      await new Promise(resolve => setTimeout(resolve, 1000)); // wait for 1 second before retrying
-    }
-    throw new Error("Timeout exceeded while waiting for transaction receipt");
-  };
-
-  try {
-    const receipt = await getTransactionReceipt(txId, 3000);
-
-    if (receipt) {
-      console.log("Transaction receipt: ", receipt);
-      if (receipt.status) {
-        console.log("Transaction was successful");
-      } else {
-        console.log("Transaction failed");
-      }
-    } else {
-      console.log("Transaction not found or pending");
-    }
-  } catch (error) {
-    console.error("Error fetching transaction receipt: ", error);
-  }
-
-  return res.send("OK");
+  sendHtml('verify.html', res);
 });
 
 
