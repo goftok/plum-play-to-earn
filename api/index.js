@@ -20,6 +20,8 @@ const methodSignature = "0xacd379cc";
 
 app.use(express.json());
 
+app.get("/", (req, res) => res.send("Working"));
+
 app.post("/get_tx_data", (req, res) => {
   const userAddress = req.body['address'];
   const amount = 1;
