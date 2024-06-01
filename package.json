@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "crypto": "^1.0.1",
+    "ethers": "^6.12.1",
+    "express": "^4.19.2",
+    "web3": "^4.9.0"
   },
   "devDependencies": {
     "@types/node": "^20.13.0"
