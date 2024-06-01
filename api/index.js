@@ -3,10 +3,6 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import crypto from 'crypto';
 import { initializeSubstreamsListeners } from './factory.js';
-//  import body-parser 
-
-import bodyParser from 'body-parser';
-
 
 const app = express();
 
@@ -23,33 +19,26 @@ const privateKey = process.env.PRIVATE_KEY;
 const methodSignature = "0xacd379cc";
 
 app.use(express.json());
-app.use(bodyParser.json());
 
-app.post("/get_tx_data", (req, res) => {
-  const userAddress = req.body['address'];
+app.get("/", (req, res) => res.send("Working"));
+
+app.post("/get_tx_data", async (req, res) => {
+  const userAddress = req.body['untrustedData']['address'];
   const amount = 1;
-  const nonce = crypto.randomBytes(32).toString('hex');
-  const chainId = req.body['buttonIndex'] === 1 ? 10 : 42161;
-  const contractAddress = chainId === 10
-    ? "0x3a30e6487037874ba0d483438b923f65820aeae9"
+  const nonce = crypto.randomBytes(32);
+  const chainId = req.body['untrustedData']['buttonIndex'] === 1 ? 10 : 42161;
+  const contractAddress = chainId === 10 
+    ? "0x3a30e6487037874ba0d483438b923f65820aeae9" 
     : "0xf3121fd1ef36c6ebbd5f9d5817817588df2bb3e6";
 
-  // Create the nonce as bytes32
-  const nonceBytes32 = ethers.utils.formatBytes32String(nonce);
+  const nonceBytes32 = ethers.zeroPadBytes(nonce, 32);
 
-  // Create the message hash
-  const messageHash = web3.utils.soliditySha3(
-    { type: 'address', value: userAddress },
-    { type: 'uint256', value: amount },
-    { type: 'bytes32', value: nonceBytes32 },
-    { type: 'uint256', value: chainId }
-  );
-
+  const messageHash = web3.utils.soliditySha3(userAddress, amount, nonceBytes32, chainId);
   // Sign the message
-  const message = ethers.utils.arrayify(messageHash);
-  const signingKey = new ethers.utils.SigningKey(privateKey);
-  const signedMessage = signingKey.signDigest(message);
-  const signature = ethers.utils.joinSignature(signedMessage);
+  const message = ethers.getBytes(messageHash);
+  const wallet = new ethers.Wallet(privateKey);
+  const signedMessage = await wallet.signMessage(message);
+  const signature = ethers.Signature.from(signedMessage).serialized
 
   // Construct tx data
   const txData = {
@@ -63,7 +52,6 @@ app.post("/get_tx_data", (req, res) => {
     },
   };
 
-  console.log(req.body);
   return res.json(txData);
 });
 
