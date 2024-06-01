@@ -88,7 +88,7 @@ app.post('/verify', async (req, res) => {
   console.log('verify:' + userFid);
   console.log('verify:' + ts);
 
-  if (ts === null || transactionMadeEarlierThanXMinutes(ts, 1)) {
+  if (ts === null || transactionMadeEarlierThanXMinutes(ts, BigInt(1))) {
     console.log("VERIFIED")
     isVerified = true
   }
