@@ -34,8 +34,9 @@ app.post("/back", (req, res) => {
 app.post("/get_tx_data", async (req, res) => {
   console.log(req.body)
   const userAddress = req.body['untrustedData']['address'];
-  const userFid = req.body['untrustedData']['fid'];
+  const userFid = req.body['untrustedData']['fid']
 
+  await kv.set(userAddress, userFid);
   const amount = 1;
   const nonce = crypto.randomBytes(32);
   const chainId = req.body['untrustedData']['buttonIndex'] === 1 ? 10 : req.body['untrustedData']['buttonIndex'] === 2 ? 42161 : 8453;
