@@ -80,7 +80,7 @@ app.post("/tx_callback", async (req, res) => {
   // const txId = req.body['untrustedData']['transactionId'];
   await kv.get(userFid);
   const old_ts = await kv.get(userFid);
-  const temp_ts = new Date().getTime()
+  const temp_ts = Math.floor(new Date().getTime() / 1000)
   await kv.set(userFid, temp_ts)
 
   setTimeout(async () => {
