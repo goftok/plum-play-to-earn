@@ -45,10 +45,10 @@ app.post("/get_tx_data", async (req, res) => {
   console.log('get_tx_data_TWO:' + userAddress + ";" + userFid);
   const amount = 1;
   const nonce = crypto.randomBytes(32);
-  const chainId = req.body['untrustedData']['buttonIndex'] === 1 ? 10 : req.body['untrustedData']['buttonIndex'] === 2 ? 42161 : 8453;
+  const chainId = req.body['untrustedData']['buttonIndex'] === 1 ? 10 : req.body['untrustedData']['buttonIndex'] === 2 ? 42161 : eq.body['untrustedData']['buttonIndex'] === 3 ? 8453 : 5000;
   const contractAddress = chainId === 10 
     ? "0x3a30e6487037874ba0d483438b923f65820aeae9" 
-    : chainId == 42161 ? "0xf3121fd1ef36c6ebbd5f9d5817817588df2bb3e6" : "0x12aa2d8ebd0b0886aeb89d7b824321f0cbccb160";
+    : chainId == 42161 ? "0xf3121fd1ef36c6ebbd5f9d5817817588df2bb3e6" : chainId == 8453 ? "0x12aa2d8ebd0b0886aeb89d7b824321f0cbccb160" : "0x978374947Da0C8BE75D7A30b4d4a4135C6a1B6E1";
 
   const nonceBytes32 = ethers.zeroPadBytes(nonce, 32);
 
