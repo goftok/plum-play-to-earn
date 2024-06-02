@@ -76,7 +76,22 @@ app.post("/get_tx_data", async (req, res) => {
 
 app.post("/tx_callback", async (req, res) => {
   console.log(req.body);
-  const txId = req.body['untrustedData']['transactionId'];
+  const userFid = req.body["untrustedData"]["fid"]
+  // const txId = req.body['untrustedData']['transactionId'];
+  await kv.get(userFid);
+  const old_ts = await kv.get(userFid);
+  const temp_ts = new Date().getTime()
+  await kv.set(userFid, temp_ts)
+
+  setTimeout(async () => {
+    await kv.get(userFid);
+    const now_ts = await kv.get(userFid);
+    if (now_ts === temp_ts) {
+      console.log('havent received approved transaction onchain')
+      await kv.set(userFid, old_ts)
+    }
+
+  }, 1000 * 30)
 
   sendHtml('back.html', res);
 });
