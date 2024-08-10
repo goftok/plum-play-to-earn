@@ -1,4 +1,4 @@
-# Hackathon3
+# Plum: Play to earn
 
 This repository was created for the ETHPrague Hackathon in Prague 2024.
 
