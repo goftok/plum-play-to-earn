@@ -23,11 +23,11 @@ This project utilizes Warpcast Frame as the frontend and UI, and The Graph Subst
 
 1. Clone the repository:
    ```shell
-   git clone https://github.com/goftok/hackathon3.git
+   git clone https://github.com/goftok/plum-play-to-earn.git
    ```
 2. Navigate to the root dir
    ```shell
-   cd hackathon3
+   cd plum-play-to-earn
    ```
 3. Install dependencies
    ```shell
